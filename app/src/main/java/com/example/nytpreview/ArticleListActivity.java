@@ -9,6 +9,6 @@ public class ArticleListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
-        showProgressBar(true);
+        showProgressBar(false);
     }
 }
