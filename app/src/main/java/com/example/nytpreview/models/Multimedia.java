@@ -1,4 +1,4 @@
-package com.example.nytpreview.Models;
+package com.example.nytpreview.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

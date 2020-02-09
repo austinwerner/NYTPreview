@@ -1,9 +1,8 @@
-package com.example.nytpreview.Activities;
+package com.example.nytpreview.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;

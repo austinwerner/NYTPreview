@@ -1,6 +1,6 @@
-package com.example.nytpreview.Requests;
+package com.example.nytpreview.requests;
 
-import com.example.nytpreview.Util.Constants;
+import com.example.nytpreview.util.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

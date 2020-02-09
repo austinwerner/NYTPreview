@@ -1,7 +1,7 @@
-package com.example.nytpreview.ViewModels;
+package com.example.nytpreview.viewmodels;
 
-import com.example.nytpreview.Models.Article;
-import com.example.nytpreview.Repositories.ArticleRepository;
+import com.example.nytpreview.models.Article;
+import com.example.nytpreview.repositories.ArticleRepository;
 
 import java.util.List;
 
@@ -18,5 +18,9 @@ public class ArticleListViewModel extends ViewModel {
 
     public LiveData<List<Article>> getArticles() {
         return mArticleReposity.getArticles();
+    }
+
+    public void searchArticlesApi(String query, int pageNumber){
+        mArticleReposity.searchArticlesApi(query, pageNumber);
     }
 }

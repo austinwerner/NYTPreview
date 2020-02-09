@@ -1,7 +1,6 @@
-package com.example.nytpreview.Requests;
+package com.example.nytpreview.requests;
 
-import com.example.nytpreview.Requests.Responses.ArticleSearchResponse;
-import com.example.nytpreview.Requests.Responses.ResponseWrapper;
+import com.example.nytpreview.requests.Responses.ResponseWrapper;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
