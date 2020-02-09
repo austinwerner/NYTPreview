@@ -9,16 +9,16 @@ public class Article implements Parcelable {
 
     private String web_url;
     private String pub_date;
-    private String[] person;
-    private Headline recipe_id;
-    private Multimedia[] image_url;
+    private Byline byline;
+    private Headline headline;
+    private Multimedia[] multimedia;
 
-    public Article(String web_url, String pub_date, String[] person, Headline recipe_id, Multimedia[] image_url) {
+    public Article(String web_url, String pub_date, Byline byline, Headline headline, Multimedia[] multimedia) {
         this.web_url = web_url;
         this.pub_date = pub_date;
-        this.person = person;
-        this.recipe_id = recipe_id;
-        this.image_url = image_url;
+        this.byline = byline;
+        this.headline = headline;
+        this.multimedia = multimedia;
     }
 
     public Article() {
@@ -27,7 +27,9 @@ public class Article implements Parcelable {
     protected Article(Parcel in) {
         web_url = in.readString();
         pub_date = in.readString();
-        person = in.createStringArray();
+        byline = in.readParcelable(Byline.class.getClassLoader());
+        headline = in.readParcelable(Headline.class.getClassLoader());
+        multimedia = in.createTypedArray(Multimedia.CREATOR);
     }
 
     public static final Creator<Article> CREATOR = new Creator<Article>() {
@@ -58,28 +60,28 @@ public class Article implements Parcelable {
         this.pub_date = pub_date;
     }
 
-    public String[] getPerson() {
-        return person;
+    public Byline getByline() {
+        return byline;
     }
 
-    public void setPerson(String[] person) {
-        this.person = person;
+    public void setByline(Byline byline) {
+        this.byline = byline;
     }
 
-    public Headline getRecipe_id() {
-        return recipe_id;
+    public Headline getHeadline() {
+        return headline;
     }
 
-    public void setRecipe_id(Headline recipe_id) {
-        this.recipe_id = recipe_id;
+    public void setHeadline(Headline headline) {
+        this.headline = headline;
     }
 
-    public Multimedia[] getImage_url() {
-        return image_url;
+    public Multimedia[] getMultimedia() {
+        return multimedia;
     }
 
-    public void setImage_url(Multimedia[] image_url) {
-        this.image_url = image_url;
+    public void setMultimedia(Multimedia[] multimedia) {
+        this.multimedia = multimedia;
     }
 
     @Override
@@ -87,9 +89,9 @@ public class Article implements Parcelable {
         return "Article{" +
                 "web_url='" + web_url + '\'' +
                 ", pub_date='" + pub_date + '\'' +
-                ", person=" + Arrays.toString(person) +
-                ", recipe_id=" + recipe_id +
-                ", image_url=" + Arrays.toString(image_url) +
+                ", byline=" + byline +
+                ", headline=" + headline +
+                ", multimedia=" + Arrays.toString(multimedia) +
                 '}';
     }
 
@@ -102,6 +104,8 @@ public class Article implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(web_url);
         parcel.writeString(pub_date);
-        parcel.writeStringArray(person);
+        parcel.writeParcelable(byline, i);
+        parcel.writeParcelable(headline, i);
+        parcel.writeTypedArray(multimedia, i);
     }
 }

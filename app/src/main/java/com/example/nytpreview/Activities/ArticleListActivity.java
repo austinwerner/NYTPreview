@@ -7,11 +7,13 @@ import android.view.View;
 import com.example.nytpreview.Models.Article;
 import com.example.nytpreview.R;
 import com.example.nytpreview.Requests.ArticleApi;
-import com.example.nytpreview.Requests.Responses.ArticleSearchResponse;
+import com.example.nytpreview.Requests.Responses.ResponseWrapper;
 import com.example.nytpreview.Requests.ServiceGenerator;
 import com.example.nytpreview.Util.SecretConstants;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,22 +44,22 @@ public class ArticleListActivity extends BaseActivity {
 
         ArticleApi articleApi = ServiceGenerator.getArticleApi();
 
-        Call<ArticleSearchResponse> responseCall = articleApi
+        Call<ResponseWrapper> responseCall = articleApi
                 .searchArticle(
                         SecretConstants.API_KEY,
                         "Kansas City",
                         "1",
-                        "neweset"
+                        "newest"
                 );
 
-        responseCall.enqueue(new Callback<ArticleSearchResponse>() {
+        responseCall.enqueue(new Callback<ResponseWrapper>() {
 
             @Override
-            public void onResponse(Call<ArticleSearchResponse> call, Response<ArticleSearchResponse> response) {
+            public void onResponse(Call<ResponseWrapper> call, Response<ResponseWrapper> response) {
                 Log.d(TAG, "onResponse: Server Response: " + response.toString());
                 if (response.code() == 200) {
-                    Article article = response.body().getArticle();
-                    Log.d(TAG, "onResponse: " + article.toString());
+                    List<Article> articles = new ArrayList<>(response.body().getResponse().getArticles());
+                    Log.d(TAG, "onResponse: " + articles.get(0).toString());
                 }
                 else{
                     try {
@@ -68,7 +70,7 @@ public class ArticleListActivity extends BaseActivity {
                 }
             }
             @Override
-            public void onFailure(Call<ArticleSearchResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseWrapper> call, Throwable t) {
                 Log.d(TAG, "onResponse: ERROR: " + t.getMessage());
             }
         });

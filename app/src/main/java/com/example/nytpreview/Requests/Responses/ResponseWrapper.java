@@ -4,22 +4,21 @@ import com.example.nytpreview.Models.Article;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import okhttp3.Response;
 
-public class ArticleSearchResponse {
-
-    @SerializedName("docs")
+public class ResponseWrapper {
+    @SerializedName("response")
     @Expose
-    private List<Article> articles;
+    private ArticleSearchResponse response;
 
-    public List<Article> getArticles() {
-        return articles;
+    public ArticleSearchResponse getResponse() {
+        return response;
     }
 
     @Override
     public String toString() {
-        return "ArticleSearchResponse{" +
-                "articles=" + articles +
+        return "ResponseWrapper{" +
+                "response=" + response +
                 '}';
     }
 }
