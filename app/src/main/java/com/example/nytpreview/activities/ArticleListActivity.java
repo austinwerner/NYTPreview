@@ -1,7 +1,7 @@
 package com.example.nytpreview.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,8 +15,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,8 +30,6 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
     private RecyclerView mRecyclerView;
     private ArticleRecyclerAdapter mAdapter;
 
-    private boolean mSearched;
-    private TextView mNoResultsText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +44,6 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
         subscribeObservers();
         initRecyclerView();
         createSearchView();
-
-        mSearched = false;
-        mNoResultsText = findViewById(R.id.no_results_text);
     }
 
     private void subscribeObservers(){
@@ -57,13 +52,14 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
             @Override
             public void onChanged(@Nullable List<Article> articles) {
                 showProgressBar(false);
+                TextView noResults = findViewById(R.id.no_results_text);
                 if(articles != null && articles.size() > 0) {
                     mAdapter.setArticles(articles);
-                    mNoResultsText.setVisibility(View.INVISIBLE);
+                    noResults.setVisibility(View.INVISIBLE);
                 }
                 else {
                     mAdapter.setArticles(null);
-                    mNoResultsText.setVisibility(View.VISIBLE);
+                    noResults.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -89,7 +85,10 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
 
     @Override
     public void onArticleClick(int position) {
-        Log.d(TAG, "article " + position + "clicked" );
+        final String webUrl = mAdapter.getArticleUrl(position);
+        Intent webViewPage = new Intent(this,ArticleWebViewActivity.class);
+        webViewPage.putExtra(ArticleWebViewActivity.BUNDLE_URL, webUrl);
+        startActivity(webViewPage);
     }
 
     private void createSearchView() {

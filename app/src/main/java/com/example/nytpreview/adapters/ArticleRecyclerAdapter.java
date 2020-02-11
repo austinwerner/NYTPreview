@@ -82,4 +82,7 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         notifyDataSetChanged();
     }
 
+    public String getArticleUrl(int position) {
+        return mArticles.get(position).getWeb_url();
+    }
 }
