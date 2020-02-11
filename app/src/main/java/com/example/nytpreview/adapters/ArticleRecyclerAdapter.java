@@ -59,17 +59,6 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         ((ArticleViewHolder)viewHolder).title.setText(mArticles.get(i).getHeadline().getMain());
 
-        /*
-        if( mArticles.get(i).getByline().getPerson().length > 2 ) {
-            String author = mArticles.get(i).getByline().getPerson() + " " + mArticles.get(i).getByline().getPerson()[2];
-            ((ArticleViewHolder) viewHolder).author.setText(author);
-            ((ArticleViewHolder) viewHolder).author.setVisibility(View.VISIBLE);
-        }
-        else {
-            ((ArticleViewHolder) viewHolder).author.setVisibility(View.GONE);
-        }
-        */
-
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date parsed = null;
         try {
@@ -82,7 +71,10 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        return mArticles.size();
+        if(mArticles != null) {
+            return mArticles.size();
+        }
+        return 0;
     }
 
     public void setArticles(List<Article> articles){
