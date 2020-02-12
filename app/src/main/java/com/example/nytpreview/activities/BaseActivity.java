@@ -15,6 +15,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResId) {
+
         ConstraintLayout constraintLayout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
         FrameLayout frameLayout = constraintLayout.findViewById(R.id.activity_content);
         mProgressBar = constraintLayout.findViewById(R.id.progress_bar);
@@ -23,7 +24,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.setContentView(constraintLayout);
     }
 
+    // Handles hiding/showing progress bar spinner
     public void showProgressBar(boolean visible) {
+
         mProgressBar.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 }

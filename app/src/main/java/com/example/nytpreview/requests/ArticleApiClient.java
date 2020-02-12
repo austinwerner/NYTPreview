@@ -27,23 +27,27 @@ public class ArticleApiClient {
     private MutableLiveData<List<Article>> mArticles;
     private RetrieveArticlesRunnables mRetrieveArticlesRunnable;
 
-    public static ArticleApiClient getInstance(){
-        if(instance == null){
+    public static ArticleApiClient getInstance() {
+
+        if (instance == null) {
             instance = new ArticleApiClient();
         }
         return instance;
     }
 
     private ArticleApiClient() {
+
         mArticles = new MutableLiveData<>();
     }
 
     public LiveData<List<Article>> getArticles() {
+
         return mArticles;
     }
 
     public void searchArticlesApi(String query, int pageNumber) {
-        if(mRetrieveArticlesRunnable != null){
+
+        if (mRetrieveArticlesRunnable != null) {
             mRetrieveArticlesRunnable = null;
         }
         mRetrieveArticlesRunnable = new RetrieveArticlesRunnables(query, pageNumber);
@@ -79,18 +83,18 @@ public class ArticleApiClient {
                 if(cancelRequest){
                     return;
                 }
-                if(response.code() == 200){
+                // Success code
+                if (response.code() == 200) {
                     List<Article> list = new ArrayList<>(((ResponseWrapper)response.body()).getResponse().getArticles());
-                    if(pageNumber == 1){
+                    if (pageNumber == 1) {
                         mArticles.postValue(list);
-                    }
-                    else{
+                    } else {
+                        // After the first page, append to the list
                         List<Article> currentRecipes = mArticles.getValue();
                         currentRecipes.addAll(list);
                         mArticles.postValue(currentRecipes);
                     }
-                }
-                else{
+                } else {
                     String error = response.errorBody().string();
                     Log.e(TAG, "run: error: " + error);
                     mArticles.postValue(null);
@@ -102,22 +106,12 @@ public class ArticleApiClient {
         }
 
         private Call<ResponseWrapper> getRecipes(String query, int pageNumber) {
+
             return ServiceGenerator.getArticleApi().searchArticle(
                     SecretConstants.API_KEY,
                     query,
                     String.valueOf(pageNumber),
                     "newest");
-        }
-
-        private void cancelRequest(){
-            Log.d(TAG, "cancelRequest: canceling the retrieval query");
-            cancelRequest = true;
-        }
-    }
-
-    public void cancelRequest() {
-        if (mRetrieveArticlesRunnable != null) {
-            mRetrieveArticlesRunnable.cancelRequest();
         }
     }
 }

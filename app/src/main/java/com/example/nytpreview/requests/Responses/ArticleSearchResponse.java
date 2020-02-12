@@ -10,16 +10,16 @@ public class ArticleSearchResponse {
 
     @SerializedName("docs")
     @Expose
-    private List<Article> articles;
+    private List<Article> mArticles;
 
     public List<Article> getArticles() {
-        return articles;
+        return mArticles;
     }
 
     @Override
     public String toString() {
         return "ArticleSearchResponse{" +
-                "articles=" + articles +
+                "articles=" + mArticles +
                 '}';
     }
 }

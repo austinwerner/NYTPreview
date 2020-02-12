@@ -2,4 +2,6 @@
     <string name="app_name">NYT Preview</string>
     <string name="query_hint">Search for article...</string>
     <string name="disconnected">Please connect to the internet"</string>
+    <string name="begin_help">Start by entering a phrase or keyword into the search box.</string>
+    <string name="no_result">No Result Found</string>
 </resources>

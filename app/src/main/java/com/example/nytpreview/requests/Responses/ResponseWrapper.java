@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 public class ResponseWrapper {
     @SerializedName("response")
     @Expose
-    private ArticleSearchResponse response;
+    private ArticleSearchResponse mResponses;
 
     public ArticleSearchResponse getResponse() {
-        return response;
+        return mResponses;
     }
 
     @Override
     public String toString() {
         return "ResponseWrapper{" +
-                "response=" + response +
+                "response=" + mResponses +
                 '}';
     }
 }

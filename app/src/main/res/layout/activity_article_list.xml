@@ -43,8 +43,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="No Results Found"
-        android:textSize="20sp"
+        android:text="@string/no_result"
+        android:textSize="@dimen/help_text_size"
+        android:textAlignment="center"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/help_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/begin_help"
+        android:textSize="@dimen/help_text_size"
         android:textAlignment="center"
         android:visibility="gone"/>
 

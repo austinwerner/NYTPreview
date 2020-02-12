@@ -14,23 +14,28 @@ public class ArticleRepository {
     private String mQuery;
     private int mPageNumber;
 
-    public static ArticleRepository getInstance(){
-        if(instance == null){
+    public static ArticleRepository getInstance() {
+
+        if (instance == null) {
             instance = new ArticleRepository();
         }
         return instance;
     }
 
     private ArticleRepository() {
+
         mArticleApiClient = ArticleApiClient.getInstance();
     }
 
     public LiveData<List<Article>> getArticles() {
+
         return mArticleApiClient.getArticles();
     }
 
     public void searchArticlesApi(String query, int pageNumber){
-        if(pageNumber == 0){
+
+        // Start at page 1
+        if (pageNumber == 0) {
             pageNumber = 1;
         }
         mQuery = query;
@@ -39,10 +44,7 @@ public class ArticleRepository {
     }
 
     public void searchNextPage() {
-        searchArticlesApi(mQuery, mPageNumber + 1);
-    }
 
-    public void cancelRequest() {
-        mArticleApiClient.cancelRequest();
+        searchArticlesApi(mQuery, mPageNumber + 1);
     }
 }

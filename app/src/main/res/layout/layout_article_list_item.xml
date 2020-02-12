@@ -39,7 +39,7 @@
             android:id="@+id/top_card_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="12dp"
             android:text="Title"
             android:textColor="@color/colorTitle"
             android:textSize="@dimen/article_title_text_large_size"

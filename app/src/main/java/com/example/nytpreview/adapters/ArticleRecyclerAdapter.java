@@ -31,6 +31,7 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Resources mResources;
 
     public ArticleRecyclerAdapter(OnArticleListener mOnArticleListener) {
+
         this.mArticles = new ArrayList<>();
         this.mOnArticleListener = mOnArticleListener;
     }
@@ -38,22 +39,25 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         mResources = viewGroup.getResources();
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_article_list_item, viewGroup, false);
         return new ArticleViewHolder(view, mOnArticleListener);
     }
 
     @Override
+    // Binds a specific view with the view holder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
         final ArticleViewHolder holder = (ArticleViewHolder)viewHolder;
         boolean hasImage = mArticles.get(i).getMultimedia().length > 0;
-        if(hasImage) {
+        if (hasImage) {
 
             // Has an image - show the image and hide large text
             // Use bottom text as the title
-            holder.image.setVisibility(View.VISIBLE);
+            holder.getImage().setVisibility(View.VISIBLE);
 
+            // load images with glide library
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .error(R.drawable.ic_launcher_background);
@@ -61,47 +65,48 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             Glide.with((holder).itemView)
                     .setDefaultRequestOptions(options)
                     .load(mArticles.get(i).getMultimedia()[0].getUrl())
-                    .into(((ArticleViewHolder) viewHolder).image);
+                    .into(((ArticleViewHolder) viewHolder).getImage());
 
-            holder.top_text.setVisibility(View.GONE);
-            holder.bottom_text.setText(mArticles.get(i).getHeadline().getMain());
-            holder.bottom_text.setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_title_text_size));
-            holder.bottom_text.setTypeface(null,Typeface.BOLD);
+            holder.getTopText().setVisibility(View.GONE);
+            holder.getBottomText().setText(mArticles.get(i).getHeadline().getMain());
+            holder.getBottomText().setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_title_text_size));
+            holder.getBottomText().setTypeface(null,Typeface.BOLD);
         }
         else {
 
             // No image - Show big text instead and hide image view
             // Use the bottom text for the article details
-            holder.image.setVisibility(View.GONE);
+            holder.getImage().setVisibility(View.GONE);
 
-            holder.top_text.setVisibility(View.VISIBLE);
-            holder.top_text.setText(mArticles.get(i).getHeadline().getMain());
+            holder.getTopText().setVisibility(View.VISIBLE);
+            holder.getTopText().setText(mArticles.get(i).getHeadline().getMain());
 
-            holder.bottom_text.setText(mArticles.get(i).getSnippet());
-            holder.bottom_text.setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_detail_text_size));
-            holder.bottom_text.setTypeface(null,Typeface.ITALIC);
+            holder.getBottomText().setText(mArticles.get(i).getSnippet());
+            holder.getBottomText().setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_detail_text_size));
+            holder.getBottomText().setTypeface(null,Typeface.ITALIC);
         }
 
         // Always show the date
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date parsed = null;
         try {
-            parsed = sdf.parse( mArticles.get(i).getPub_date() );
+            parsed = sdf.parse(mArticles.get(i).getPub_date());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ((ArticleViewHolder)viewHolder).date.setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(parsed));
+        ((ArticleViewHolder)viewHolder).getDate().setText(new SimpleDateFormat("EEE, MMM d yyyy", Locale.US).format(parsed));
     }
 
     @Override
     public int getItemCount() {
-        if(mArticles != null) {
+        if (mArticles != null) {
             return mArticles.size();
         }
         return 0;
     }
 
-    public void setArticles(List<Article> articles){
+    public void setArticles(List<Article> articles) {
+
         mArticles = articles;
         notifyDataSetChanged();
     }

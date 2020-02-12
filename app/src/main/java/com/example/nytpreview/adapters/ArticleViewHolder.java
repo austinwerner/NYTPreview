@@ -11,25 +11,47 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView top_text, bottom_text, date;
-    ImageView image;
-    OnArticleListener onArticleListener;
+    TextView mTopText;
+    TextView mBottomText;
+    TextView mDate;
+    ImageView mImage;
+    OnArticleListener mOnArticleListener;
 
     public ArticleViewHolder(@NonNull View itemView, OnArticleListener onArticleListener) {
         super(itemView);
 
-        this.onArticleListener = onArticleListener;
+        this.mOnArticleListener = onArticleListener;
 
-        top_text = itemView.findViewById(R.id.top_card_text);
-        bottom_text = itemView.findViewById(R.id.bottom_card_text);
-        date = itemView.findViewById(R.id.article_date);
-        image = itemView.findViewById(R.id.article_image);
+        mTopText = itemView.findViewById(R.id.top_card_text);
+        mBottomText = itemView.findViewById(R.id.bottom_card_text);
+        mDate = itemView.findViewById(R.id.article_date);
+        mImage = itemView.findViewById(R.id.article_image);
 
         itemView.setOnClickListener(this);
     }
 
+    public TextView getTopText() {
+        return mTopText;
+    }
+
+    public TextView getBottomText() {
+        return mBottomText;
+    }
+
+    public TextView getDate() {
+        return mDate;
+    }
+
+    public ImageView getImage() {
+        return mImage;
+    }
+
+    public OnArticleListener getOnArticleListener() {
+        return mOnArticleListener;
+    }
+
     @Override
     public void onClick(View v) {
-        onArticleListener.onArticleClick(getAdapterPosition());
+        mOnArticleListener.onArticleClick(getAdapterPosition());
     }
 }
