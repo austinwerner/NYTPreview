@@ -133,6 +133,7 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
                     // Hide help text and start progress spinner
                     findViewById(R.id.help_text).setVisibility(View.GONE);
                     showProgressBar(true);
+                    searchView.clearFocus();
 
                     // Search for the first page with this query
                     mArticleListViewModel.searchArticlesApi(query, 1);
