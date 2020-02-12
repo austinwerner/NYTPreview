@@ -1,6 +1,9 @@
 package com.example.nytpreview.adapters;
 
 
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private List<Article> mArticles;
     private OnArticleListener mOnArticleListener;
+    private Resources mResources;
 
     public ArticleRecyclerAdapter(OnArticleListener mOnArticleListener) {
         this.mArticles = new ArrayList<>();
@@ -34,6 +38,7 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        mResources = viewGroup.getResources();
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_article_list_item, viewGroup, false);
         return new ArticleViewHolder(view, mOnArticleListener);
     }
@@ -41,24 +46,43 @@ public class ArticleRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-        if( mArticles.get(i).getMultimedia().length > 0 ) {
-            ((ArticleViewHolder) viewHolder).image.setVisibility(View.VISIBLE);
+        final ArticleViewHolder holder = (ArticleViewHolder)viewHolder;
+        boolean hasImage = mArticles.get(i).getMultimedia().length > 0;
+        if(hasImage) {
+
+            // Has an image - show the image and hide large text
+            // Use bottom text as the title
+            holder.image.setVisibility(View.VISIBLE);
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .error(R.drawable.ic_launcher_background);
 
-            Glide.with(((ArticleViewHolder) viewHolder).itemView)
+            Glide.with((holder).itemView)
                     .setDefaultRequestOptions(options)
                     .load(mArticles.get(i).getMultimedia()[0].getUrl())
                     .into(((ArticleViewHolder) viewHolder).image);
+
+            holder.top_text.setVisibility(View.GONE);
+            holder.bottom_text.setText(mArticles.get(i).getHeadline().getMain());
+            holder.bottom_text.setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_title_text_size));
+            holder.bottom_text.setTypeface(null,Typeface.BOLD);
         }
         else {
-            ((ArticleViewHolder) viewHolder).image.setVisibility(View.GONE);
+
+            // No image - Show big text instead and hide image view
+            // Use the bottom text for the article details
+            holder.image.setVisibility(View.GONE);
+
+            holder.top_text.setVisibility(View.VISIBLE);
+            holder.top_text.setText(mArticles.get(i).getHeadline().getMain());
+
+            holder.bottom_text.setText(mArticles.get(i).getSnippet());
+            holder.bottom_text.setTextSize(TypedValue.COMPLEX_UNIT_PX,mResources.getDimension(R.dimen.article_detail_text_size));
+            holder.bottom_text.setTypeface(null,Typeface.ITALIC);
         }
 
-        ((ArticleViewHolder)viewHolder).title.setText(mArticles.get(i).getHeadline().getMain());
-
+        // Always show the date
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Date parsed = null;
         try {

@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/search_view"
-                app:queryHint="Search for article..."
+                app:queryHint="@string/query_hint"
                 />
 
         </androidx.appcompat.widget.Toolbar>

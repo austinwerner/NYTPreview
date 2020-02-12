@@ -25,7 +25,7 @@ public class ArticleRepository {
         mArticleApiClient = ArticleApiClient.getInstance();
     }
 
-    public LiveData<List<Article>> getArticles(){
+    public LiveData<List<Article>> getArticles() {
         return mArticleApiClient.getArticles();
     }
 

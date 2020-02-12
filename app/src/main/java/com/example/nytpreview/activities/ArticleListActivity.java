@@ -1,17 +1,19 @@
 package com.example.nytpreview.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nytpreview.R;
 import com.example.nytpreview.adapters.ArticleRecyclerAdapter;
 import com.example.nytpreview.adapters.OnArticleListener;
 import com.example.nytpreview.models.Article;
 import com.example.nytpreview.viewmodels.ArticleListViewModel;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -85,10 +87,12 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
 
     @Override
     public void onArticleClick(int position) {
-        final String webUrl = mAdapter.getArticleUrl(position);
-        Intent webViewPage = new Intent(this,ArticleWebViewActivity.class);
-        webViewPage.putExtra(ArticleWebViewActivity.BUNDLE_URL, webUrl);
-        startActivity(webViewPage);
+        if(isInternetAvailable()) {
+            final String webUrl = mAdapter.getArticleUrl(position);
+            Intent webViewPage = new Intent(this, ArticleWebViewActivity.class);
+            webViewPage.putExtra(ArticleWebViewActivity.BUNDLE_URL, webUrl);
+            startActivity(webViewPage);
+        }
     }
 
     private void createSearchView() {
@@ -99,9 +103,14 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                // Search for the first page with this query
-                showProgressBar(true);
-                mArticleListViewModel.searchArticlesApi(query, 1);
+                if(isInternetAvailable()) {
+                    // Search for the first page with this query
+                    showProgressBar(true);
+                    mArticleListViewModel.searchArticlesApi(query, 1);
+                } else {
+                    showDisconnectedToast();
+                }
+
 
                 return false;
             }
@@ -111,5 +120,22 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
                 return false;
             }
         });
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected) {
+            showDisconnectedToast();
+        }
+        return isConnected;
+    }
+
+    private void showDisconnectedToast() {
+        Toast.makeText(this, getString(R.string.disconnected), Toast.LENGTH_SHORT).show();
     }
 }

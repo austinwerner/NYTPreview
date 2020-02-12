@@ -9,16 +9,16 @@ public class Article implements Parcelable {
 
     private String web_url;
     private String pub_date;
-    private Byline byline;
     private Headline headline;
     private Multimedia[] multimedia;
+    private String snippet;
 
-    public Article(String web_url, String pub_date, Byline byline, Headline headline, Multimedia[] multimedia) {
+    public Article(String web_url, String pub_date, Headline headline, Multimedia[] multimedia, String snippet) {
         this.web_url = web_url;
         this.pub_date = pub_date;
-        this.byline = byline;
         this.headline = headline;
         this.multimedia = multimedia;
+        this.snippet = snippet;
     }
 
     public Article() {
@@ -27,9 +27,9 @@ public class Article implements Parcelable {
     protected Article(Parcel in) {
         web_url = in.readString();
         pub_date = in.readString();
-        byline = in.readParcelable(Byline.class.getClassLoader());
         headline = in.readParcelable(Headline.class.getClassLoader());
         multimedia = in.createTypedArray(Multimedia.CREATOR);
+        snippet = in.readString();
     }
 
     public static final Creator<Article> CREATOR = new Creator<Article>() {
@@ -60,14 +60,6 @@ public class Article implements Parcelable {
         this.pub_date = pub_date;
     }
 
-    public Byline getByline() {
-        return byline;
-    }
-
-    public void setByline(Byline byline) {
-        this.byline = byline;
-    }
-
     public Headline getHeadline() {
         return headline;
     }
@@ -84,16 +76,14 @@ public class Article implements Parcelable {
         this.multimedia = multimedia;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "web_url='" + web_url + '\'' +
-                ", pub_date='" + pub_date + '\'' +
-                ", byline=" + byline +
-                ", headline=" + headline +
-                ", multimedia=" + Arrays.toString(multimedia) +
-                '}';
+    public String getSnippet() {
+        return snippet;
     }
+
+    public void setSnippet(String snippet) {
+        this.snippet = snippet;
+    }
+
 
     @Override
     public int describeContents() {
@@ -104,8 +94,19 @@ public class Article implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(web_url);
         parcel.writeString(pub_date);
-        parcel.writeParcelable(byline, i);
         parcel.writeParcelable(headline, i);
         parcel.writeTypedArray(multimedia, i);
+        parcel.writeString(snippet);
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "web_url='" + web_url + '\'' +
+                ", pub_date='" + pub_date + '\'' +
+                ", headline=" + headline +
+                ", multimedia=" + Arrays.toString(multimedia) +
+                ", snippet='" + snippet + '\'' +
+                '}';
     }
 }

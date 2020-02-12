@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView title, date;
+    TextView top_text, bottom_text, date;
     ImageView image;
     OnArticleListener onArticleListener;
 
@@ -20,7 +20,8 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.O
 
         this.onArticleListener = onArticleListener;
 
-        title = itemView.findViewById(R.id.article_title_text);
+        top_text = itemView.findViewById(R.id.top_card_text);
+        bottom_text = itemView.findViewById(R.id.bottom_card_text);
         date = itemView.findViewById(R.id.article_date);
         image = itemView.findViewById(R.id.article_image);
 

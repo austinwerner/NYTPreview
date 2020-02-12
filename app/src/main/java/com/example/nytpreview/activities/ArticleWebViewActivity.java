@@ -1,9 +1,9 @@
 package com.example.nytpreview.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +12,7 @@ import android.webkit.WebViewClient;
 
 import com.example.nytpreview.R;
 
-public class ArticleWebViewActivity extends AppCompatActivity {
+public class ArticleWebViewActivity extends BaseActivity {
 
     final public static String BUNDLE_URL = "ARTICLE_URL";
 
@@ -38,6 +38,8 @@ public class ArticleWebViewActivity extends AppCompatActivity {
             // Invalid URL, pop the page
             finish();
         }
+
+        showProgressBar(true);
     }
 
     private void loadUrl(String url) {
@@ -52,6 +54,18 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            // Only show progress spinner before page appears
+            showProgressBar(false);
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
         }
     }
 

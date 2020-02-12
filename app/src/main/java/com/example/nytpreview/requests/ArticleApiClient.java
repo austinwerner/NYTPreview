@@ -38,11 +38,11 @@ public class ArticleApiClient {
         mArticles = new MutableLiveData<>();
     }
 
-    public LiveData<List<Article>> getArticles(){
+    public LiveData<List<Article>> getArticles() {
         return mArticles;
     }
 
-    public void searchArticlesApi(String query, int pageNumber){
+    public void searchArticlesApi(String query, int pageNumber) {
         if(mRetrieveArticlesRunnable != null){
             mRetrieveArticlesRunnable = null;
         }
@@ -59,7 +59,7 @@ public class ArticleApiClient {
         }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
-    private class RetrieveArticlesRunnables implements Runnable{
+    private class RetrieveArticlesRunnables implements Runnable {
 
         private String query;
         private int pageNumber;
@@ -101,7 +101,7 @@ public class ArticleApiClient {
             }
         }
 
-        private Call<ResponseWrapper> getRecipes(String query, int pageNumber){
+        private Call<ResponseWrapper> getRecipes(String query, int pageNumber) {
             return ServiceGenerator.getArticleApi().searchArticle(
                     SecretConstants.API_KEY,
                     query,

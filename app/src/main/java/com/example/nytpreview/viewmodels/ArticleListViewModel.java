@@ -30,14 +30,6 @@ public class ArticleListViewModel extends ViewModel {
         mArticleReposity.searchArticlesApi(query, pageNumber);
     }
 
-    public boolean onBackPressed(){
-        if(mIsPerformingQuery){
-            Log.d(TAG, "onBackPressed: canceling the request");
-            mArticleReposity.cancelRequest();
-        }
-        return true;
-    }
-
     public void searchNextPage(){
         Log.d(TAG, "searchNextPage: called.");
         if(!mIsPerformingQuery ) {

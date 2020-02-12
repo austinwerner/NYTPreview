@@ -3,7 +3,7 @@
     style="@style/CardView.Dark"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="1dp"
+    app:cardElevation="8dp"
     app:cardPreventCornerOverlap="true"
     app:cardCornerRadius="4dp"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -12,8 +12,8 @@
     app:layout_constraintTop_toTopOf="parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:shadowDx="20"
-    android:shadowDy="50"
+    android:shadowDx="30"
+    android:shadowDy="60"
     android:shadowRadius="80"
     app:contentPaddingBottom="8dp"
     app:cardUseCompatPadding="true"
@@ -36,19 +36,33 @@
             />
 
         <TextView
-            android:id="@+id/article_title_text"
+            android:id="@+id/top_card_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Title"
+            android:textColor="@color/colorTitle"
+            android:textSize="@dimen/article_title_text_large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/article_image"
+            android:background="@color/colorTitleBackground"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/bottom_card_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Title"
+            android:text="Detail"
             android:textColor="@color/colorTitle"
             android:textSize="@dimen/article_title_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/article_image" />
+            app:layout_constraintTop_toBottomOf="@id/top_card_text" />
 
         <TextView
             android:id="@+id/article_date"
@@ -62,7 +76,7 @@
             android:textSize="@dimen/article_detail_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/article_title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_card_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
