@@ -116,6 +116,7 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
             Intent webViewPage = new Intent(this, ArticleWebViewActivity.class);
             webViewPage.putExtra(ArticleWebViewActivity.BUNDLE_URL, webUrl);
             startActivity(webViewPage);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 
