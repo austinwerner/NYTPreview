@@ -32,7 +32,7 @@ public class ArticleRepository {
         return mArticleApiClient.getArticles();
     }
 
-    public void searchArticlesApi(String query, int pageNumber){
+    public void searchArticlesApi(String query, int pageNumber) {
 
         // Start at page 1
         if (pageNumber == 0) {

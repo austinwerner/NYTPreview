@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class Multimedia implements Parcelable {
 
+    private static final String URL_PREFIX = "https://www.nytimes.com/";
+
     private String url;
     private String type;
 
@@ -34,7 +36,7 @@ public class Multimedia implements Parcelable {
     };
 
     public String getUrl() {
-        return "https://www.nytimes.com/" + url;
+        return URL_PREFIX + url;
     }
 
     public void setUrl(String url) {

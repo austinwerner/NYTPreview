@@ -44,7 +44,10 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
         subscribeObservers();
         initRecyclerView();
         createSearchView();
-        setToolbarScrollingEnabled(false);
+
+        if (!mArticleListViewModel.articlesAvailable() ) {
+            setToolbarScrollingEnabled(false);
+        }
     }
 
     @Override
@@ -58,8 +61,7 @@ public class ArticleListActivity extends BaseActivity implements OnArticleListen
     private void showHelpText() {
 
         if (findViewById(R.id.no_results_text).getVisibility() != View.VISIBLE &&
-                ( mArticleListViewModel.getArticles().getValue() == null ||
-                mArticleListViewModel.getArticles().getValue().size() == 0 ) ) {
+                !mArticleListViewModel.articlesAvailable() ) {
             findViewById(R.id.help_text).setVisibility(View.VISIBLE);
         } else {
             findViewById(R.id.help_text).setVisibility(View.GONE);

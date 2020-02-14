@@ -23,6 +23,8 @@ public class ArticleApiClient {
 
     private static final String TAG = "ArticleApiClient";
 
+    private static final String SORT = "newest";
+
     private static ArticleApiClient instance;
     private MutableLiveData<List<Article>> mArticles;
     private RetrieveArticlesRunnables mRetrieveArticlesRunnable;
@@ -65,28 +67,28 @@ public class ArticleApiClient {
 
     private class RetrieveArticlesRunnables implements Runnable {
 
-        private String query;
-        private int pageNumber;
-        private boolean cancelRequest;
+        private String mQuery;
+        private int mPageNumber;
+        private boolean mCancelRequest;
 
         private RetrieveArticlesRunnables(String query, int pageNumber) {
-            this.query = query;
-            this.pageNumber = pageNumber;
-            cancelRequest = false;
+            this.mQuery = query;
+            this.mPageNumber = pageNumber;
+            this.mCancelRequest = false;
         }
 
         @Override
         public void run() {
 
             try {
-                Response response = getRecipes(query, pageNumber).execute();
-                if(cancelRequest){
+                Response response = getRecipes(mQuery, mPageNumber).execute();
+                if (mCancelRequest) {
                     return;
                 }
                 // Success code
                 if (response.code() == 200) {
                     List<Article> list = new ArrayList<>(((ResponseWrapper)response.body()).getResponse().getArticles());
-                    if (pageNumber == 1) {
+                    if (mPageNumber == 1) {
                         mArticles.postValue(list);
                     } else {
                         // After the first page, append to the list
@@ -95,8 +97,6 @@ public class ArticleApiClient {
                         mArticles.postValue(currentRecipes);
                     }
                 } else {
-                    String error = response.errorBody().string();
-                    Log.e(TAG, "run: error: " + error);
                     mArticles.postValue(null);
                 }
             } catch (Exception e) {
@@ -111,7 +111,7 @@ public class ArticleApiClient {
                     SecretConstants.API_KEY,
                     query,
                     String.valueOf(pageNumber),
-                    "newest");
+                    SORT);
         }
     }
 }

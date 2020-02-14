@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView mTopText;
-    TextView mBottomText;
-    TextView mDate;
-    ImageView mImage;
-    OnArticleListener mOnArticleListener;
+    private TextView mTopText;
+    private TextView mBottomText;
+    private TextView mDate;
+    private ImageView mImage;
+    private OnArticleListener mOnArticleListener;
 
     public ArticleViewHolder(@NonNull View itemView, OnArticleListener onArticleListener) {
         super(itemView);
@@ -44,10 +44,6 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public ImageView getImage() {
         return mImage;
-    }
-
-    public OnArticleListener getOnArticleListener() {
-        return mOnArticleListener;
     }
 
     @Override
